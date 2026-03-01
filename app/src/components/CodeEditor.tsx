@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { type OnMount } from "@monaco-editor/react";
 import { Loader2 } from "lucide-react";
 
 interface CodeEditorProps {
@@ -19,14 +19,14 @@ export function CodeEditor({
   readOnly = false,
   height = "400px",
 }: CodeEditorProps) {
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef<Parameters<OnMount>[0] | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const handleEditorDidMount = (editor: any) => {
+  const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
     
     // Configure editor options
@@ -54,7 +54,7 @@ export function CodeEditor({
     // Add custom commands
     editor.addCommand(
       // Ctrl/Cmd + S to save
-      (window as any).monaco?.KeyMod?.CtrlCmd | (window as any).monaco?.KeyCode?.KeyS,
+      monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
       () => {
         // Auto-save is handled by parent component
         console.log("Save shortcut pressed");
@@ -102,16 +102,3 @@ export function CodeEditor({
   );
 }
 
-// Type definitions for Monaco editor
-declare global {
-  interface Window {
-    monaco?: {
-      KeyMod: {
-        CtrlCmd: number;
-      };
-      KeyCode: {
-        KeyS: number;
-      };
-    };
-  }
-}

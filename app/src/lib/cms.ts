@@ -110,23 +110,24 @@ export const cms = {
 };
 
 // Mock data fallback for development
-export const mockCourses = [
+export const mockCourses: CMSCourse[] = [
   {
-    id: "anchor-fundamentals",
+    _id: "anchor-fundamentals",
     title: "Anchor Fundamentals",
+    slug: { current: "anchor-fundamentals" },
     description: "Build secure Solana programs with Anchor",
-    lessons: 12,
     xp: 1200,
-    difficulty: "Beginner" as const,
+    difficulty: "Beginner",
     track: "Development",
     duration: "6 hours",
     badge: "Anchor Beginner",
+    isPublished: true,
   },
 ];
 
-export function getCourses() {
+export function getCourses(): Promise<CMSCourse[]> {
   if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
     return cms.getCourses();
   }
-  return Promise.resolve(mockCourses as any);
+  return Promise.resolve(mockCourses);
 }

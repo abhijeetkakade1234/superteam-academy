@@ -4,7 +4,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { MeshGradient } from "@/components/MeshGradient";
 import { User, Bell, Globe, Shield, Wallet, LogOut, Save, ChevronRight, Moon, Sun } from "lucide-react";
 import { motion } from "framer-motion";
-import { useI18n } from "@/components/I18nProvider";
+import { useI18n, type Language } from "@/components/I18nProvider";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -111,13 +111,13 @@ export default function SettingsPage() {
                       <label className="block text-sm text-white/40 mb-4">{t("settings.preferences.language")}</label>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         {[
-                          { id: "en", label: "English" },
-                          { id: "pt-BR", label: "Português" },
-                          { id: "es", label: "Español" }
+                          { id: "en" as Language, label: "English" },
+                          { id: "pt-BR" as Language, label: "Português" },
+                          { id: "es" as Language, label: "Español" }
                         ].map((lang) => (
                           <button
                             key={lang.id}
-                            onClick={() => setLanguage(lang.id as any)}
+                            onClick={() => setLanguage(lang.id)}
                             className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all ${language === lang.id
                                 ? "bg-white text-black border-white"
                                 : "bg-white/5 border-white/10 text-white/60 hover:border-white/20 hover:text-white"

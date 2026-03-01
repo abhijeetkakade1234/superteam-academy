@@ -6,12 +6,13 @@ import { Trophy, Medal, Star, Shield, Zap, Lock, ExternalLink, Share2, Award } f
 import { motion } from "framer-motion";
 import { useI18n } from "@/components/I18nProvider";
 import Link from "next/link";
+import { type LucideIcon } from "lucide-react";
 
 interface Achievement {
   id: string;
   title: string;
   description: string;
-  icon: any;
+  icon: LucideIcon;
   rarity: "common" | "rare" | "epic" | "legendary";
   unlockedAt?: string;
   isSoulbound?: boolean;

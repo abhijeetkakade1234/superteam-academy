@@ -12,7 +12,9 @@ interface NavbarProps {
   showNavLinks?: boolean;
 }
 
-function NavLink({ href, icon: Icon, label }: { href: string; icon: any; label: string }) {
+import { type LucideIcon } from "lucide-react";
+
+function NavLink({ href, icon: Icon, label }: { href: string; icon: LucideIcon; label: string }) {
   return (
     <Link
       href={href}

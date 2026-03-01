@@ -5,13 +5,20 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 export function initGA() {
   if (!GA_ID || typeof window === "undefined") return;
 
   // Initialize gtag
-  const gtag = (...args: any[]) => {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push(args);
+  const gtag = (...args: unknown[]) => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(args);
   };
   
   gtag("js", new Date());
@@ -24,15 +31,15 @@ export function initGA() {
 export function pageview(url: string) {
   if (!GA_ID || typeof window === "undefined") return;
   
-  (window as any).gtag?.("config", GA_ID, {
+  window.gtag?.("config", GA_ID, {
     page_path: url,
   });
 }
 
-export function event(name: string, params?: Record<string, any>) {
+export function event(name: string, params?: Record<string, unknown>) {
   if (!GA_ID || typeof window === "undefined") return;
   
-  (window as any).gtag?.("event", name, params);
+  window.gtag?.("event", name, params);
 }
 
 // Hook for automatic page view tracking
