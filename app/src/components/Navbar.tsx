@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { BookOpen, Trophy, User, Settings, Globe, Award } from "lucide-react";
+import { BookOpen, Trophy, User, Settings, Globe, Award, type LucideIcon } from "lucide-react";
 import { SolanaLogo } from "./SolanaLogo";
 import { useI18n, languages } from "./I18nProvider";
 import { useState, useEffect } from "react";
@@ -11,8 +11,6 @@ import { useState, useEffect } from "react";
 interface NavbarProps {
   showNavLinks?: boolean;
 }
-
-import { type LucideIcon } from "lucide-react";
 
 function NavLink({ href, icon: Icon, label }: { href: string; icon: LucideIcon; label: string }) {
   return (
