@@ -105,11 +105,11 @@ export function ThreeHeroBackground() {
     // Create main tube curve - S-wave / ocean swell
     const createWaveCurve = (offset = 0, amplitude = 1) => {
       const points = [];
-      for (let i = 0; i <= 100; i++) {
-        const t = i / 100;
-        const x = 40 - t * 60; // From right to left
-        const y = (Math.sin(t * Math.PI * 1.5 + offset) * 12 - 5) * amplitude;
-        const z = Math.sin(t * Math.PI * 0.5 + offset) * 5;
+      for (let i = 0; i <= 200; i++) {
+        const t = i / 200;
+        const x = 100 - t * 200; // From right to left, spanning much wider
+        const y = (Math.sin(t * Math.PI * 2.5 + offset) * 12 - 5) * amplitude;
+        const z = Math.sin(t * Math.PI * 0.8 + offset) * 5;
         points.push(new THREE.Vector3(x, y, z));
       }
       return new THREE.CatmullRomCurve3(points);
@@ -117,7 +117,7 @@ export function ThreeHeroBackground() {
 
     // Main tube geometry with wave
     let mainCurve = createWaveCurve(0, 1);
-    const mainTubeGeometry = new THREE.TubeGeometry(mainCurve, 200, 1.2, 32, false);
+    const mainTubeGeometry = new THREE.TubeGeometry(mainCurve, 400, 1.2, 32, false);
 
     // Custom shader material for iridescence - Solana purple
     const mainTubeMaterial = new THREE.MeshPhysicalMaterial({
@@ -137,18 +137,18 @@ export function ThreeHeroBackground() {
     // Second thinner teal tube
     const createSecondaryCurve = (offset = 0) => {
       const points = [];
-      for (let i = 0; i <= 100; i++) {
-        const t = i / 100;
-        const x = 38 - t * 58;
-        const y = Math.sin(t * Math.PI * 1.5 + offset) * 10 - 3 + Math.sin(t * 3 + offset) * 2;
-        const z = Math.sin(t * Math.PI * 0.5 + offset) * 8 + 3;
+      for (let i = 0; i <= 200; i++) {
+        const t = i / 200;
+        const x = 95 - t * 190;
+        const y = Math.sin(t * Math.PI * 2.5 + offset) * 10 - 3 + Math.sin(t * 3 + offset) * 2;
+        const z = Math.sin(t * Math.PI * 0.8 + offset) * 8 + 3;
         points.push(new THREE.Vector3(x, y, z));
       }
       return new THREE.CatmullRomCurve3(points);
     };
 
     let secondaryCurve = createSecondaryCurve(0);
-    const secondaryTubeGeometry = new THREE.TubeGeometry(secondaryCurve, 200, 0.35, 16, false);
+    const secondaryTubeGeometry = new THREE.TubeGeometry(secondaryCurve, 400, 0.35, 16, false);
     const secondaryTubeMaterial = new THREE.MeshPhysicalMaterial({
       color: 0x14f195,
       metalness: 0.8,
@@ -229,12 +229,12 @@ export function ThreeHeroBackground() {
       // Recreate main tube with wave
       mainTube.geometry.dispose();
       const newMainCurve = createWaveCurve(waveOffset, 1);
-      mainTube.geometry = new THREE.TubeGeometry(newMainCurve, 200, 1.2, 32, false);
+      mainTube.geometry = new THREE.TubeGeometry(newMainCurve, 400, 1.2, 32, false);
 
       // Recreate secondary tube with wave
       secondaryTube.geometry.dispose();
       const newSecondaryCurve = createSecondaryCurve(waveOffset * 1.2);
-      secondaryTube.geometry = new THREE.TubeGeometry(newSecondaryCurve, 200, 0.35, 16, false);
+      secondaryTube.geometry = new THREE.TubeGeometry(newSecondaryCurve, 400, 0.35, 16, false);
 
       // Tube gentle rotation
       tubeGroup.rotation.y += 0.0003;
