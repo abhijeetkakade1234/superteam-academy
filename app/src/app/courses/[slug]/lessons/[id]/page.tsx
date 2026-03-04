@@ -35,6 +35,27 @@ interface ConsoleLog {
   timestamp: string;
 }
 
+const DEFAULT_CODE = `use anchor_lang::prelude::*;
+
+// Welcome to the Superteam Academy Playground!
+// Feel free to experiment with your Solana programs here.
+
+declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+
+#[program]
+pub mod playground {
+    use super::*;
+
+    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+        msg!("Greetings from the playground!");
+        Ok(())
+    }
+}
+
+#[derive(Accounts)]
+pub struct Initialize {}
+`;
+
 export default function LessonPage() {
   const { t, language } = useI18n();
   const params = useParams();
@@ -95,6 +116,8 @@ export default function LessonPage() {
         setCode(savedCode);
       } else if (lessonContent?.code) {
         setCode(lessonContent.code);
+      } else {
+        setCode(DEFAULT_CODE);
       }
 
       const completed = localStorage.getItem(`completed_${slug}_${lessonId}_${userId}`);
@@ -105,6 +128,8 @@ export default function LessonPage() {
       const lessonContent = getLessonContent(slug, lessonId, lesson?.title || "", language);
       if (lessonContent?.code) {
         setCode(lessonContent.code);
+      } else {
+        setCode(DEFAULT_CODE);
       }
     }
   }, [lesson, slug, lessonId, userId, language]);
@@ -134,8 +159,6 @@ export default function LessonPage() {
   }, []);
 
   const handleRunCode = async () => {
-    if (lesson?.type !== "challenge") return;
-
     setIsRunning(true);
     setTestResults([]);
     clearConsole();
@@ -144,34 +167,40 @@ export default function LessonPage() {
     await new Promise(resolve => setTimeout(resolve, 1500));
     addConsoleLog("success", "✓ Compilation successful!");
 
-    addConsoleLog("info", "🧪 Running tests...");
+    if (lesson?.type === "challenge") {
+      addConsoleLog("info", "🧪 Running tests...");
 
-    const lessonContent = getLessonContent(slug, lessonId, lesson?.title || "", language);
-    if (lessonContent?.testCases) {
-      const results = lessonContent.testCases.map(test => {
-        const passed = test.check(code);
-        if (passed) {
-          addConsoleLog("success", `✓ ${test.name}: ${test.description}`);
+      const lessonContent = getLessonContent(slug, lessonId, lesson?.title || "", language);
+      if (lessonContent?.testCases) {
+        const results = lessonContent.testCases.map(test => {
+          const passed = test.check(code);
+          if (passed) {
+            addConsoleLog("success", `✓ ${test.name}: ${test.description}`);
+          } else {
+            addConsoleLog("error", `✗ ${test.name}: ${test.errorMessage}`);
+          }
+          return {
+            passed,
+            message: test.name,
+          };
+        });
+
+        setTestResults(results);
+
+        const allPassed = results.every(r => r.passed);
+        if (allPassed && !isCompleted) {
+          addConsoleLog("success", "🎉 All tests passed!");
+          handleCompleteLesson();
+        } else if (allPassed) {
+          addConsoleLog("success", "✓ All tests passed (already completed)");
         } else {
-          addConsoleLog("error", `✗ ${test.name}: ${test.errorMessage}`);
+          addConsoleLog("warning", `⚠ ${results.filter(r => !r.passed).length} test(s) failed`);
         }
-        return {
-          passed,
-          message: test.name,
-        };
-      });
-
-      setTestResults(results);
-
-      const allPassed = results.every(r => r.passed);
-      if (allPassed && !isCompleted) {
-        addConsoleLog("success", "🎉 All tests passed!");
-        handleCompleteLesson();
-      } else if (allPassed) {
-        addConsoleLog("success", "✓ All tests passed (already completed)");
-      } else {
-        addConsoleLog("warning", `⚠ ${results.filter(r => !r.passed).length} test(s) failed`);
       }
+    } else {
+      addConsoleLog("info", "🚀 Code running in playground mode...");
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      addConsoleLog("success", "✓ Program finished execution");
     }
 
     setIsRunning(false);
@@ -196,14 +225,14 @@ export default function LessonPage() {
 
   const handleResetCode = () => {
     const lessonContent = getLessonContent(slug, lessonId, lesson?.title || "", language);
-    if (lessonContent?.code) {
-      setCode(lessonContent.code);
-      if (userId) {
-        localStorage.setItem(`code_${slug}_${lessonId}_${userId}`, lessonContent.code);
-      }
-      clearConsole();
-      addConsoleLog("info", "Code reset to starter template");
+    const resetToCode = lessonContent?.code || DEFAULT_CODE;
+
+    setCode(resetToCode);
+    if (userId) {
+      localStorage.setItem(`code_${slug}_${lessonId}_${userId}`, resetToCode);
     }
+    clearConsole();
+    addConsoleLog("info", resetToCode === DEFAULT_CODE ? "Code reset to playground template" : "Code reset to starter template");
   };
 
   const handleEnroll = async () => {
@@ -364,10 +393,10 @@ export default function LessonPage() {
               )}
             </div>
 
-            <div className={`grid gap-6 ${isChallenge ? "lg:grid-cols-[1fr,1.2fr]" : ""}`}>
+            <div className={`grid gap-6 lg:grid-cols-[1fr,1.2fr]`}>
               <div className="space-y-6">
                 <MarkdownContent content={lessonContent?.content || ""} />
-                {!isChallenge && !isCompleted && (
+                {!isCompleted && (
                   <button onClick={handleCompleteLesson} className="mt-8 px-6 py-3 bg-white text-black rounded-md font-medium hover:bg-white/90 transition-colors flex items-center gap-2">
                     <Check className="w-4 h-4" />
                     {t("lesson.markComplete")}
@@ -375,46 +404,97 @@ export default function LessonPage() {
                 )}
               </div>
 
-              {isChallenge && (
-                <div className="space-y-4">
-                  <div className="border border-white/10 rounded-xl overflow-hidden bg-zinc-950">
-                    <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
-                      <div className="flex items-center gap-2">
-                        <Code className="w-4 h-4 text-white/40" />
-                        <span className="text-sm font-medium">lib.rs</span>
-                      </div>
-                      <div className="flex gap-2">
-                        <button onClick={handleResetCode} className="text-xs text-white/40 hover:text-white px-2 py-1 rounded hover:bg-white/5">
-                          <RotateCcw className="w-3 h-3" />
-                        </button>
+              <div className="space-y-4">
+                <div className="border border-white/10 rounded-xl overflow-hidden bg-zinc-950">
+                  <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
+                    <div className="flex items-center gap-2">
+                      <Code className="w-4 h-4 text-white/40" />
+                      <span className="text-sm font-medium">{isChallenge ? "lib.rs" : "Playground"}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button onClick={handleResetCode} className="text-xs text-white/40 hover:text-white px-2 py-1 rounded hover:bg-white/5">
+                        <RotateCcw className="w-3 h-3" />
+                      </button>
+                      {isChallenge && (
                         <button onClick={() => setShowSolution(!showSolution)} className="text-xs text-white/60 hover:text-white px-3 py-1.5 rounded-md hover:bg-white/5">
                           {showSolution ? t("lesson.hideSolution") : t("lesson.showSolution")}
                         </button>
-                      </div>
-                    </div>
-                    <CodeEditor value={showSolution ? (lessonContent?.solution || "") : code} onChange={setCode} language="rust" readOnly={showSolution || isCompleted} height="600px" />
-                    <div className="px-4 py-3 bg-white/5 border-t border-white/10">
-                      <button onClick={handleRunCode} disabled={isRunning || isCompleted || showSolution} className="px-4 py-2 bg-white text-black rounded-md text-sm font-medium hover:bg-white/90 transition-colors flex items-center gap-2">
-                        <Play className="w-4 h-4" />
-                        {t("lesson.runTests")}
-                      </button>
+                      )}
                     </div>
                   </div>
-
-                  <div className="border border-white/10 rounded-xl overflow-hidden bg-black">
-                    <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
-                      <span className="text-sm font-medium">{t("lesson.console")}</span>
-                    </div>
-                    <div className="h-40 overflow-y-auto p-4 font-mono text-sm space-y-1">
-                      {consoleLogs.map((log, i) => (
-                        <div key={i} className={log.type === "error" ? "text-red-400" : log.type === "success" ? "text-green-400" : "text-white/60"}>
-                          [{log.timestamp}] {log.message}
-                        </div>
-                      ))}
-                    </div>
+                  <CodeEditor value={showSolution ? (lessonContent?.solution || "") : code} onChange={setCode} language="rust" readOnly={showSolution || isCompleted} height="600px" />
+                  <div className="px-4 py-3 bg-white/5 border-t border-white/10">
+                    <button onClick={handleRunCode} disabled={isRunning || isCompleted || showSolution} className="px-4 py-2 bg-white text-black rounded-md text-sm font-medium hover:bg-white/90 transition-colors flex items-center gap-2">
+                      <Play className="w-4 h-4" />
+                      {isChallenge ? t("lesson.runTests") : "Run Code"}
+                    </button>
                   </div>
                 </div>
-              )}
+
+                <div className="border border-white/10 rounded-xl overflow-hidden bg-black">
+                  <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
+                    <span className="text-sm font-medium">{t("lesson.console")}</span>
+                  </div>
+                  <div className="h-40 overflow-y-auto p-4 font-mono text-sm space-y-1">
+                    {consoleLogs.map((log, i) => (
+                      <div key={i} className={log.type === "error" ? "text-red-400" : log.type === "success" ? "text-green-400" : "text-white/60"}>
+                        [{log.timestamp}] {log.message}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {isChallenge && lessonContent?.testCases && lessonContent.testCases.length > 0 && (
+                  <div className="border border-white/10 rounded-xl overflow-hidden bg-zinc-950">
+                    <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
+                      <span className="text-sm font-medium">{t("lesson.testCases") || "Test Cases"}</span>
+                    </div>
+                    <div className="p-4 space-y-3">
+                      {lessonContent.testCases.map((tc) => {
+                        const result = testResults.find((tr) => tr.message === tc.name);
+                        const isPassed = result?.passed;
+                        const isFailed = result !== undefined && !result.passed;
+
+                        return (
+                          <div key={tc.id} className="flex items-start gap-3">
+                            <div
+                              className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${isPassed
+                                ? "bg-green-500/20 text-green-400"
+                                : isFailed
+                                  ? "bg-red-500/20 text-red-400"
+                                  : "bg-white/10 text-white/40"
+                                }`}
+                            >
+                              {isPassed ? (
+                                <Check className="w-3 h-3" />
+                              ) : isFailed ? (
+                                <X className="w-3 h-3" />
+                              ) : (
+                                <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                              )}
+                            </div>
+                            <div>
+                              <div
+                                className={`text-sm font-medium ${isPassed
+                                  ? "text-green-400"
+                                  : isFailed
+                                    ? "text-red-400"
+                                    : "text-white/80"
+                                  }`}
+                              >
+                                {tc.name}
+                              </div>
+                              <div className="text-xs text-white/50 mt-0.5">
+                                {tc.description}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </main>

@@ -1,17 +1,26 @@
-const withSentryConfig = require("@sentry/nextjs").withSentryConfig;
+import * as Sentry from "@sentry/nextjs";
 
-/** @type {import('@sentry/nextjs').UserSentryOptions} */
-const sentryWebpackPluginOptions = {
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-  
-  silent: true,
-  
-  widenClientFileUpload: true,
-  
-  hideSourceMaps: true,
-  
-  disableLogger: true,
-};
+Sentry.init({
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
 
-module.exports = withSentryConfig(sentryWebpackPluginOptions);
+  // Adjust this value in production, or use tracesSampler for greater control
+  tracesSampleRate: 1.0,
+
+  // Setting this option to true will print useful information to the console while you're setting up Sentry.
+  debug: false,
+
+  replaysOnErrorSampleRate: 1.0,
+
+  // This sets the sample rate to be 10%. You may want this to be 100% while
+  // in development and sample at a lower rate in production
+  replaysSessionSampleRate: 0.1,
+
+  // You can remove this option if you're not planning to use the Sentry browser extension
+  integrations: [
+    Sentry.replayIntegration({
+      // Additional Replay configuration goes here, for example:
+      maskAllText: true,
+      blockAllMedia: true,
+    }),
+  ],
+});

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
 
 type Language = "en" | "pt-BR" | "es";
 
@@ -30,7 +30,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const [translations, setTranslations] = useState<Translations | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
-  const loadTranslations = async (lang: Language) => {
+  const loadTranslations = useCallback(async (lang: Language) => {
     try {
       const response = await fetch(`/locales/${lang}/common.json`);
       const data = await response.json();
@@ -39,10 +39,17 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       console.error(`Failed to load translations for ${lang}`, error);
       // Fallback to English if not already English
       if (lang !== "en") {
-        loadTranslations("en");
+        // Direct recursion avoiding reference to self in useCallback
+        try {
+          const response = await fetch(`/locales/en/common.json`);
+          const data = await response.json();
+          setTranslations(data);
+        } catch (e) {
+          console.error("Failed to load fallback English translations", e);
+        }
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -50,7 +57,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     const initialLang: Language = saved && ["en", "pt-BR", "es"].includes(saved) ? saved : "en";
     setLanguageState(initialLang);
     loadTranslations(initialLang);
-  }, []);
+  }, [loadTranslations]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
