@@ -19,14 +19,14 @@ export async function getXPBalance(wallet: PublicKey): Promise<number> {
       false,
       TOKEN_2022_PROGRAM_ID
     );
-    
+
     const account = await getAccount(
       connection,
       ata,
       "confirmed",
       TOKEN_2022_PROGRAM_ID
     );
-    
+
     // XP is usually 0 decimals for simplicity on-chain
     return Number(account.amount);
   } catch (error) {

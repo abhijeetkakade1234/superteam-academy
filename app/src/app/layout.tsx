@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Superteam Academy — Master Solana Development",
   description: "The decentralized learning platform where developers earn soulbound XP tokens and verifiable credentials.",
   manifest: "/manifest.json",
-  themeColor: "#000000",
+
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",

@@ -103,7 +103,7 @@ export default function PublicProfilePage() {
             try {
                 pubkey = new PublicKey(username);
             } catch (e) {
-                // Fallback to a dummy public key for non-pubkey usernames 
+                // Fallback to a dummy public key for non-pubkey usernames
                 pubkey = new PublicKey("11111111111111111111111111111111");
             }
 

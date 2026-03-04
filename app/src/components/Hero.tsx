@@ -13,10 +13,12 @@ export function Hero() {
   const [displayedCode, setDisplayedCode] = useState("");
   const [isTyping, setIsTyping] = useState(true);
 
-  const codeSnippets = [
-    {
-      language: "anchor",
-      code: `#[program]
+
+  useEffect(() => {
+    const codeSnippets = [
+      {
+        language: "anchor",
+        code: `#[program]
 pub mod solana_academy {
     use super::*;
     
@@ -27,10 +29,10 @@ pub mod solana_academy {
         Ok(())
     }
 }`,
-    },
-    {
-      language: "typescript",
-      code: `import { Connection, PublicKey } from '@solana/web3.js';
+      },
+      {
+        language: "typescript",
+        code: `import { Connection, PublicKey } from '@solana/web3.js';
 
 const connection = new Connection('https://api.devnet.solana.com');
 
@@ -38,10 +40,9 @@ const connection = new Connection('https://api.devnet.solana.com');
 const progress = await connection.getAccountInfo(
   new PublicKey(studentPda)
 );`,
-    },
-  ];
+      },
+    ];
 
-  useEffect(() => {
     const code = codeSnippets[activeTab].code;
     setDisplayedCode("");
     setIsTyping(true);
@@ -81,7 +82,7 @@ const progress = await connection.getAccountInfo(
   } as const;
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative w-full overflow-hidden">
       <ThreeHeroBackground />
 
       <div className="relative z-20">
