@@ -12,9 +12,9 @@
 
 ## 🚀 Live Demo
 
-**Deployed on Devnet:** [Coming Soon]
+**Deployed on Vercel:** [https://superteam-academy-nu.vercel.app/](https://superteam-academy-nu.vercel.app/)
 
-**Video Walkthrough:** [Coming Soon]
+**Video Walkthrough:** [https://vimeo.com/superteam-academy/walkthrough](https://vimeo.com/superteam-academy/walkthrough)
 
 ---
 
@@ -23,7 +23,7 @@
 Superteam Academy is a **gamified decentralized learning management system** that revolutionizes how developers learn Solana. Unlike traditional platforms, we use:
 
 - 🪙 **Soulbound XP Tokens** - Token-2022 with NonTransferable + PermanentDelegate
-- 🎖️ **ZK-Compressed Credentials** - Rent-free, upgradeable per learning track  
+- 🎖️ **ZK-Compressed Credentials** - Rent-free, upgradeable per learning track
 - 📊 **Bitmap Tracking** - Efficient on-chain lesson completion
 - 💰 **Creator Economics** - Automatic XP rewards for course authors
 - 🔥 **Streak System** - Activity-derived streaks with freeze protection
@@ -33,6 +33,7 @@ Superteam Academy is a **gamified decentralized learning management system** tha
 ## ✨ Key Features
 
 ### For Learners
+
 - **Earn Soulbound XP** - Complete lessons and courses to earn XP tokens that permanently record your achievements
 - **Collect Credentials** - Earn ZK-compressed credentials that upgrade as you progress through tracks
 - **Maintain Streaks** - Keep daily learning streaks alive with automatic tracking
@@ -40,11 +41,13 @@ Superteam Academy is a **gamified decentralized learning management system** tha
 - **Achievement System** - Unlock achievements and earn bonus XP
 
 ### For Creators
+
 - **Earn Rewards** - Receive XP when students complete your courses
 - **Course Registry** - Register courses with metadata, prerequisites, and XP amounts
 - **Track Analytics** - Monitor enrollments, completions, and student progress
 
 ### Technical Highlights
+
 - ✅ **16 On-Chain Instructions** - Complete learning platform logic
 - ✅ **Token-2022 Integration** - NonTransferable + PermanentDelegate extensions
 - ✅ **ZK Compression Ready** - Architecture prepared for Light Protocol integration
@@ -163,6 +166,7 @@ superteam-academy/
 ## 🛠️ Technology Stack
 
 ### On-Chain
+
 - **Framework:** Anchor 0.31+
 - **Language:** Rust 1.82+
 - **Token Standard:** Token-2022 (NonTransferable + PermanentDelegate)
@@ -170,15 +174,19 @@ superteam-academy/
 - **Testing:** LiteSVM, Mollusk
 
 ### Frontend
+
 - **Framework:** Next.js 14
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **Wallet:** Solana Wallet Adapter (Phantom, Solflare, Backpack)
 
 ### Infrastructure
+
 - **RPC:** Helius (DAS API + Photon for ZK Compression)
-- **Content:** Arweave
-- **CI/CD:** GitHub Actions
+- **Content:** Arweave / Sanity CMS
+- **Analytics:** Google Analytics 4, Microsoft Clarity (Heatmaps)
+- **Monitoring:** Sentry (Error Tracking)
+- **CI/CD:** Vercel / GitHub Actions
 
 ---
 
@@ -229,22 +237,26 @@ npm run dev
 ## 📋 Instructions (16 Total)
 
 ### Platform Management (4)
+
 - `initialize` - Create Config PDA
 - `create_season` - Create new XP mint
 - `close_season` - Close current season
 - `update_config` - Rotate backend signer, adjust caps
 
 ### Learner (4)
+
 - `init_learner` - Create learner profile
 - `claim_achievement` - Claim achievement XP
 - `award_streak_freeze` - Award freeze protection
 - `register_referral` - Register referrer
 
 ### Courses (2)
+
 - `create_course` - Register new course
 - `update_course` - Update course content
 
 ### Enrollment & Progress (6)
+
 - `enroll` - Enroll in course
 - `unenroll` - Abandon course (24h cooldown)
 - `complete_lesson` - Complete lesson + earn XP
@@ -256,18 +268,19 @@ npm run dev
 
 ## 🔐 Security Model
 
-| Instruction | Platform | Course Auth | Backend | Learner |
-|-------------|----------|-------------|---------|---------|
-| initialize | ✅ | | | |
-| create_season | ✅ | | | |
-| create_course | ✅ | | | |
-| update_course | | ✅ | | |
-| complete_lesson | | | ✅ | |
-| finalize_course | | | ✅ | |
-| issue_credential | | | ✅ | |
-| enroll | | | | ✅ |
+| Instruction      | Platform | Course Auth | Backend | Learner |
+| ---------------- | -------- | ----------- | ------- | ------- |
+| initialize       | ✅       |             |         |         |
+| create_season    | ✅       |             |         |         |
+| create_course    | ✅       |             |         |         |
+| update_course    |          | ✅          |         |         |
+| complete_lesson  |          |             | ✅      |         |
+| finalize_course  |          |             | ✅      |         |
+| issue_credential |          |             | ✅      |         |
+| enroll           |          |             |         | ✅      |
 
 **Security Features:**
+
 - ✅ Backend signer for all XP-awarding operations
 - ✅ On-chain daily XP caps
 - ✅ Bitmap double-completion prevention
@@ -280,21 +293,23 @@ npm run dev
 ## 💰 Cost Analysis
 
 ### One-Time Setup
-| Item | Cost |
-|------|------|
-| Deploy program | ~2 SOL |
-| Config PDA | ~0.002 SOL |
-| **Total** | **~2 SOL** |
+
+| Item           | Cost       |
+| -------------- | ---------- |
+| Deploy program | ~2 SOL     |
+| Config PDA     | ~0.002 SOL |
+| **Total**      | **~2 SOL** |
 
 ### Per Learner (Annual)
-| Action | Cost |
-|--------|------|
-| Init learner | ~0.001 SOL |
-| Enroll (5 courses) | ~0.005 SOL |
-| Complete lessons | ~0.001 SOL |
-| **Net annual** | **~0.002 SOL** |
 
-*Credentials use ZK Compression: zero rent*
+| Action             | Cost           |
+| ------------------ | -------------- |
+| Init learner       | ~0.001 SOL     |
+| Enroll (5 courses) | ~0.005 SOL     |
+| Complete lessons   | ~0.001 SOL     |
+| **Net annual**     | **~0.002 SOL** |
+
+_Credentials use ZK Compression: zero rent_
 
 ---
 
@@ -333,6 +348,7 @@ anchor test
 This project was built for the **Superteam Brazil Hackathon**.
 
 ### Development Workflow
+
 ```bash
 # Create feature branch
 git checkout -b feat/<feature-name>-<DD-MM-YYYY>
@@ -373,10 +389,10 @@ MIT License - see [LICENSE](LICENSE) file
 ## 📬 Contact
 
 - **Telegram:** [@kauenet](https://t.me/kauenet)
-- **GitHub:** [AbhijeetKakade2004](https://github.com/AbhijeetKakade2004)
+- **GitHub:** [abhijeetkakade1234](https://github.com/AbhijeetKakade200abhijeetkakade1234)
 
 ---
 
 **Built with ❤️ for the Solana ecosystem**
 
-*This project represents 16 days of focused development, implementing a complete decentralized learning platform with advanced features like Token-2022 soulbound tokens and ZK-ready credential architecture.*
+_This project represents 16 days of focused development, implementing a complete decentralized learning platform with advanced features like Token-2022 soulbound tokens and ZK-ready credential architecture._
