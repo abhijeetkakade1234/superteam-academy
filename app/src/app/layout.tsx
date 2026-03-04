@@ -10,7 +10,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "react-hot-toast";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
@@ -19,6 +19,16 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Superteam Academy — Master Solana Development",
   description: "The decentralized learning platform where developers earn soulbound XP tokens and verifiable credentials.",
+  manifest: "/manifest.json",
+  themeColor: "#000000",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Superteam Academy",
+  },
+  icons: {
+    apple: "/logo192.png",
+  },
 };
 
 export default function RootLayout({
@@ -28,12 +38,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      </head>
       <body className={`${inter.variable} font-sans`}>
         <I18nProvider>
-            <Suspense fallback={null}>
-              <AnalyticsTracker />
-            </Suspense>
-            <WalletContextProvider>
+          <Suspense fallback={null}>
+            <AnalyticsTracker />
+          </Suspense>
+          <WalletContextProvider>
             <ServicesProvider>
               <Navbar />
               {children}
@@ -63,6 +77,18 @@ export default function RootLayout({
             </ServicesProvider>
           </WalletContextProvider>
         </I18nProvider>
+        {/* Microsoft Clarity Heatmap */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_ID || "your-clarity-id"}");
+            `,
+          }}
+        />
       </body>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
     </html>

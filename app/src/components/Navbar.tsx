@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { BookOpen, Trophy, User, Settings, Globe, Award, type LucideIcon } from "lucide-react";
+import { BookOpen, Trophy, User, Settings, Globe, Award, Menu, X, Zap, Sparkles } from "lucide-react";
 import { SolanaLogo } from "./SolanaLogo";
 import { useI18n, languages } from "./I18nProvider";
 import { useState, useEffect } from "react";
@@ -30,6 +30,7 @@ export function Navbar({ showNavLinks = true }: NavbarProps) {
   const { connected } = useWallet();
   const { language, setLanguage, t } = useI18n();
   const [showLangDropdown, setShowLangDropdown] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export function Navbar({ showNavLinks = true }: NavbarProps) {
           {showNavLinks && (
             <nav className="hidden md:flex items-center">
               <NavLink href="/courses" icon={BookOpen} label={t("nav.courses")} />
+              <NavLink href="/challenges" icon={Zap} label={t("nav.challenges")} />
               <NavLink href="/leaderboard" icon={Trophy} label={t("nav.leaderboard")} />
               <NavLink href="/achievements" icon={Award} label={t("nav.achievements")} />
               {mounted && connected && (
@@ -104,8 +106,34 @@ export function Navbar({ showNavLinks = true }: NavbarProps) {
             {mounted && (
               <WalletMultiButton className="!bg-white !text-black !rounded-full !px-6 !py-2 !h-10 !text-sm !font-bold hover:!opacity-90 transition-opacity" />
             )}
+            {/* Mobile Menu Toggle */}
+            {showNavLinks && (
+              <button
+                className="md:hidden p-2 text-white/80 hover:text-white"
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+              >
+                {showMobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            )}
           </div>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {showNavLinks && showMobileMenu && (
+          <div className="md:hidden py-4 border-t border-white/10 flex flex-col gap-2">
+            <NavLink href="/courses" icon={BookOpen} label={t("nav.courses")} />
+            <NavLink href="/challenges" icon={Zap} label={t("nav.challenges")} />
+            <NavLink href="/leaderboard" icon={Trophy} label={t("nav.leaderboard")} />
+            <NavLink href="/achievements" icon={Award} label={t("nav.achievements")} />
+            {mounted && connected && (
+              <>
+                <NavLink href="/dashboard" icon={Trophy} label={t("nav.dashboard")} />
+                <NavLink href="/profile" icon={User} label={t("nav.profile")} />
+                <NavLink href="/settings" icon={Settings} label={t("nav.settings")} />
+              </>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );

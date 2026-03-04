@@ -7,7 +7,9 @@
     "settings": "Settings",
     "achievements": "Achievements",
     "connectWallet": "Connect Wallet",
-    "superteamAcademy": "Superteam Academy"
+    "superteamAcademy": "Superteam Academy",
+    "challenges": "Challenges",
+    "assessment": "Assessment"
   },
   "footer": {
     "community": "Community",
@@ -67,7 +69,8 @@
     "allTestsPassed": "All tests passed!",
     "locked": "Lesson Locked",
     "enrollToUnlock": "Enroll in this course to unlock all lessons",
-    "backToCourse": "Back to course"
+    "backToCourse": "Back to course",
+    "solveChallenge": "Solve Challenge"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -123,13 +126,61 @@
       "title": "First Step",
       "desc": "Complete your first lesson on Superteam Academy."
     },
-    "anchorMaster": {
-      "title": "Anchor Master",
-      "desc": "Complete the Anchor Fundamentals course with all challenges passed."
+    "courseCompleter": {
+      "title": "Course Completer",
+      "desc": "Successfully finish your first full course."
+    },
+    "speedRunner": {
+      "title": "Speed Runner",
+      "desc": "Complete a course in record time."
     },
     "streak7": {
       "title": "Week Warrior",
       "desc": "Maintain a 7-day learning streak."
+    },
+    "monthlyMaster": {
+      "title": "Monthly Master",
+      "desc": "Maintain a 30-day learning streak."
+    },
+    "consistencyKing": {
+      "title": "Consistency King",
+      "desc": "Maintain a 100-day learning streak."
+    },
+    "rustRookie": {
+      "title": "Rust Rookie",
+      "desc": "Complete all basic Rust modules."
+    },
+    "anchorExpert": {
+      "title": "Anchor Expert",
+      "desc": "Master all advanced Anchor framework modules."
+    },
+    "fullStackSolana": {
+      "title": "Full Stack Solana",
+      "desc": "Complete both program and frontend integration tracks."
+    },
+    "helper": {
+      "title": "Helper",
+      "desc": "Help other students in the community."
+    },
+    "firstComment": {
+      "title": "First Comment",
+      "desc": "Engage with the community for the first time."
+    },
+    "topContributor": {
+      "title": "Top Contributor",
+      "desc": "Rank among the top helpful community members."
+    },
+    "earlyAdopter": {
+      "title": "Early Adopter",
+      "desc": "Joined during the platform's early beta phase."
+    },
+    "bugHunter": {
+      "title": "Bug Hunter",
+      "desc": "Reported a valid security or technical bug."
+    },
+    "perfectScore": {
+      "title": "Perfect Score",
+      "desc": "Complete an assessment with 100% accuracy."
     },
     "topLeaderboard": {
       "title": "Elite Builder",
@@ -178,7 +229,28 @@
       "title": "Master Solana Development",
       "subtitle": "The decentralized learning platform where developers earn soulbound XP tokens and verifiable credentials.",
       "cta": "Start Learning",
-      "explore": "Explore Courses"
+      "explore": "Explore the Code"
     }
+  },
+  "challenges": {
+    "title": "Code Challenges",
+    "subtitle": "Sharpen your Solana skills with daily coding challenges. Race against the clock, earn XP, and climb the speed leaderboard.",
+    "dailyChallenges": "Daily Challenges",
+    "moreChallenges": "More Challenges",
+    "comingSoonDesc": "Token-2022 and ZK Compression challenges are being added soon.",
+    "todayChallenge": "Today's Challenge",
+    "pastChallenges": "Past Challenges",
+    "speedBoard": "Speed Board",
+    "seasonalEvents": "Seasonal Events",
+    "timeRemaining": "Time Remaining",
+    "attempts": "attempts",
+    "solved": "solved",
+    "submitSolution": "Submit Solution",
+    "startChallenge": "Start",
+    "revealHint": "Reveal Hint {{n}} (-{{xp}} XP penalty)",
+    "solveTime": "Solve Time",
+    "rank": "Rank",
+    "builder": "Builder",
+    "reward": "Reward"
   }
 }
