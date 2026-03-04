@@ -139,13 +139,15 @@ const progress = await connection.getAccountInfo(
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-green-400 opacity-0 group-hover:opacity-20 transition-opacity" />
               </Link>
-              <Link
-                href="/courses"
+              <a
+                href="https://github.com/abhijeetkakade1234/superteam-academy"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex items-center gap-2 px-8 py-4 text-white/70 hover:text-white font-medium transition-colors"
               >
+                <Github className="w-5 h-5" />
                 {t("home.hero.explore")}
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </a>
             </motion.div>
 
             {/* Interactive Code Window with Typing Effect */}
@@ -165,8 +167,8 @@ const progress = await connection.getAccountInfo(
                         key={lang}
                         onClick={() => setActiveTab(idx)}
                         className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${activeTab === idx
-                            ? "bg-white/10 text-white shadow-sm"
-                            : "text-white/40 hover:text-white/60"
+                          ? "bg-white/10 text-white shadow-sm"
+                          : "text-white/40 hover:text-white/60"
                           }`}
                       >
                         {lang}
@@ -511,13 +513,13 @@ const progress = await connection.getAccountInfo(
                     Start Learning Free
                   </Link>
                   <a
-                    href="https://github.com/AbhijeetKakade2004/superteam-academy"
+                    href="https://github.com/abhijeetkakade1234/superteam-academy"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-8 py-4 text-white/70 hover:text-white font-medium transition-colors"
                   >
                     <Github className="w-5 h-5" />
-                    Explore the Code
+                    {t("home.hero.explore")}
                   </a>
                 </div>
               </div>
