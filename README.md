@@ -105,7 +105,7 @@ Superteam Academy is a **gamified decentralized learning management system** tha
 
 **Track:** DeFi/Development Tools
 
-**Team:** @AbhijeetKakade2004
+**Team:** @abhijeetkakade1234
 
 **Submission Date:** February 2026
 
