@@ -8,7 +8,12 @@
     "achievements": "Conquistas",
     "connectWallet": "Conectar Carteira",
     "superteamAcademy": "Superteam Academy",
-    "challenges": "Desafios"
+    "challenges": "Desafios",
+    "signIn": "Entrar",
+    "signInGoogle": "Continuar com Google",
+    "signInGitHub": "Continuar com GitHub",
+    "signOut": "Sair",
+    "or": "ou"
   },
   "footer": {
     "community": "Comunidade",

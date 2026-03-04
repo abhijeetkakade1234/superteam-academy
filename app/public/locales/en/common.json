@@ -9,7 +9,12 @@
     "connectWallet": "Connect Wallet",
     "superteamAcademy": "Superteam Academy",
     "challenges": "Challenges",
-    "assessment": "Assessment"
+    "assessment": "Assessment",
+    "signIn": "Sign In",
+    "signInGoogle": "Continue with Google",
+    "signInGitHub": "Continue with GitHub",
+    "signOut": "Sign Out",
+    "or": "or"
   },
   "footer": {
     "community": "Community",
