@@ -7,7 +7,8 @@
     "settings": "Configuración",
     "achievements": "Logros",
     "connectWallet": "Conectar Billetera",
-    "superteamAcademy": "Superteam Academy"
+    "superteamAcademy": "Superteam Academy",
+    "challenges": "Desafíos"
   },
   "footer": {
     "community": "Comunidad",
@@ -67,7 +68,8 @@
     "allTestsPassed": "¡Todas las pruebas pasaron!",
     "locked": "Lección Bloqueada",
     "enrollToUnlock": "Inscríbete en el curso para desbloquear todas las lecciones",
-    "backToCourse": "Volver al curso"
+    "backToCourse": "Volver al curso",
+    "solveChallenge": "Resolver Desafío"
   },
   "dashboard": {
     "title": "Panel",
@@ -180,5 +182,26 @@
       "cta": "Comenzar a Aprender",
       "explore": "Explorar Cursos"
     }
+  },
+  "challenges": {
+    "title": "Desafíos de Código",
+    "subtitle": "Perfecciona tus habilidades en Solana con desafíos diarios. Corre contra el reloj, gana XP y escala en el tablero de velocidad.",
+    "dailyChallenges": "Desafíos Diarios",
+    "moreChallenges": "Más Desafíos",
+    "comingSoonDesc": "Pronto se agregarán desafíos de Token-2022 y ZK Compression.",
+    "todayChallenge": "Desafío de Hoy",
+    "pastChallenges": "Desafíos Pasados",
+    "speedBoard": "Tablero de Velocidad",
+    "seasonalEvents": "Eventos Estacionales",
+    "timeRemaining": "Tiempo Restante",
+    "attempts": "intentos",
+    "solved": "resueltos",
+    "submitSolution": "Enviar Solución",
+    "startChallenge": "Comenzar",
+    "revealHint": "Revelar Pista {{n}} (penalización de -{{xp}} XP)",
+    "solveTime": "Tiempo de Resolución",
+    "rank": "Rango",
+    "builder": "Constructor",
+    "reward": "Recompensa"
   }
 }

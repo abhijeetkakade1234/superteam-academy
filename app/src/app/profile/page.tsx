@@ -27,6 +27,69 @@ const SKILLS = [
   { name: "Security", level: 40 },
 ];
 
+function RadarChart({ skills }: { skills: { name: string; level: number }[] }) {
+  const size = 300;
+  const center = size / 2;
+  const radius = (size / 2) - 40;
+  const angleStep = (Math.PI * 2) / skills.length;
+
+  const getCoordinatesForAngle = (angle: number, length: number) => {
+    return {
+      x: center + Math.cos(angle - Math.PI / 2) * length,
+      y: center + Math.sin(angle - Math.PI / 2) * length
+    };
+  };
+
+  const levels = [20, 40, 60, 80, 100];
+
+  const dataPoints = skills.map((skill, i) => {
+    const angle = i * angleStep;
+    return getCoordinatesForAngle(angle, (skill.level / 100) * radius);
+  });
+
+  const pathData = dataPoints.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(" ") + " Z";
+
+  return (
+    <div className="flex justify-center items-center p-4">
+      <svg width={size} height={size} className="overflow-visible">
+        {/* Background Grids */}
+        {levels.map((level, index) => {
+          const levelRadius = (level / 100) * radius;
+          const points = skills.map((_, i) => getCoordinatesForAngle(i * angleStep, levelRadius))
+            .map(p => `${p.x},${p.y}`).join(" ");
+          return (
+            <polygon key={index} points={points} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+          );
+        })}
+
+        {/* Axes */}
+        {skills.map((_, i) => {
+          const { x, y } = getCoordinatesForAngle(i * angleStep, radius);
+          return <line key={i} x1={center} y1={center} x2={x} y2={y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />;
+        })}
+
+        {/* Data Polygon */}
+        <path d={pathData} fill="rgba(250, 204, 21, 0.4)" stroke="rgba(250, 204, 21, 1)" strokeWidth="2" />
+
+        {/* Data Points */}
+        {dataPoints.map((p, i) => (
+          <circle key={i} cx={p.x} cy={p.y} r="4" fill="#facc15" />
+        ))}
+
+        {/* Labels */}
+        {skills.map((skill, i) => {
+          const { x, y } = getCoordinatesForAngle(i * angleStep, radius + 25);
+          return (
+            <text key={i} x={x} y={y} fill="rgba(255,255,255,0.6)" fontSize="12" textAnchor="middle" dominantBaseline="middle">
+              {skill.name}
+            </text>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
 export default function ProfilePage() {
   const { t } = useI18n();
   const { connected, publicKey } = useWallet();
@@ -182,24 +245,11 @@ export default function ProfilePage() {
             )}
           </section>
 
-          {/* Skills */}
+          {/* Skills Radar Chart */}
           <section className="mb-12">
-            <h2 className="text-xl font-semibold mb-6">{t("profile.skills")}</h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              {SKILLS.map((skill) => (
-                <div key={skill.name} className="bg-white/5 border border-white/10 rounded-xl p-4">
-                  <div className="flex justify-between mb-2">
-                    <span className="font-medium">{skill.name}</span>
-                    <span className="text-white/40">{skill.level}%</span>
-                  </div>
-                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+            <h2 className="text-xl font-semibold mb-6">{t("profile.skills") || "Skills Radar"}</h2>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <RadarChart skills={SKILLS} />
             </div>
           </section>
 

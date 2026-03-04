@@ -7,7 +7,8 @@
     "settings": "Configurações",
     "achievements": "Conquistas",
     "connectWallet": "Conectar Carteira",
-    "superteamAcademy": "Superteam Academy"
+    "superteamAcademy": "Superteam Academy",
+    "challenges": "Desafios"
   },
   "footer": {
     "community": "Comunidade",
@@ -67,7 +68,8 @@
     "allTestsPassed": "Todos os testes passaram!",
     "locked": "Lição Bloqueada",
     "enrollToUnlock": "Matcule-se no curso para desbloquear todas as lições",
-    "backToCourse": "Voltar ao curso"
+    "backToCourse": "Voltar ao curso",
+    "solveChallenge": "Resolver Desafio"
   },
   "dashboard": {
     "title": "Painel",
@@ -159,7 +161,7 @@
   "certificate": {
     "title": "Certificado",
     "subtitle": "Credencial de Desenvolvedor",
-    "notFound": "Certificado Não Encontrado",
+    "notFound": "Certificado No Encontrado",
     "backToProfile": "Voltar ao Perfil",
     "level": "Nível {{level}}",
     "levelLabel": "Nível da Credencial",
@@ -180,5 +182,26 @@
       "cta": "Começar a Aprender",
       "explore": "Explorar Cursos"
     }
+  },
+  "challenges": {
+    "title": "Desafios de Código",
+    "subtitle": "Aprimore suas habilidades em Solana com desafios diários. Corra contra o tempo, ganhe XP e suba no ranking de velocidade.",
+    "dailyChallenges": "Desafios Diários",
+    "moreChallenges": "Mais Desafios",
+    "comingSoonDesc": "Desafios de Token-2022 e ZK Compression serão adicionados em breve.",
+    "todayChallenge": "Desafio de Hoje",
+    "pastChallenges": "Desafios Passados",
+    "speedBoard": "Ranking de Velocidade",
+    "seasonalEvents": "Eventos Sazonais",
+    "timeRemaining": "Tempo Restante",
+    "attempts": "tentativas",
+    "solved": "resolvidos",
+    "submitSolution": "Enviar Solução",
+    "startChallenge": "Começar",
+    "revealHint": "Revelar Dica {{n}} (penalidade de -{{xp}} XP)",
+    "solveTime": "Tempo de Resolução",
+    "rank": "Rank",
+    "builder": "Construtor",
+    "reward": "Recompensa"
   }
 }

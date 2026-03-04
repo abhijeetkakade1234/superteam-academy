@@ -7,7 +7,8 @@
     "settings": "Settings",
     "achievements": "Achievements",
     "connectWallet": "Connect Wallet",
-    "superteamAcademy": "Superteam Academy"
+    "superteamAcademy": "Superteam Academy",
+    "challenges": "Challenges"
   },
   "footer": {
     "community": "Community",
@@ -67,7 +68,8 @@
     "allTestsPassed": "All tests passed!",
     "locked": "Lesson Locked",
     "enrollToUnlock": "Enroll in this course to unlock all lessons",
-    "backToCourse": "Back to course"
+    "backToCourse": "Back to course",
+    "solveChallenge": "Solve Challenge"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -180,5 +182,26 @@
       "cta": "Start Learning",
       "explore": "Explore Courses"
     }
+  },
+  "challenges": {
+    "title": "Code Challenges",
+    "subtitle": "Sharpen your Solana skills with daily coding challenges. Race against the clock, earn XP, and climb the speed leaderboard.",
+    "dailyChallenges": "Daily Challenges",
+    "moreChallenges": "More Challenges",
+    "comingSoonDesc": "Token-2022 and ZK Compression challenges are being added soon.",
+    "todayChallenge": "Today's Challenge",
+    "pastChallenges": "Past Challenges",
+    "speedBoard": "Speed Board",
+    "seasonalEvents": "Seasonal Events",
+    "timeRemaining": "Time Remaining",
+    "attempts": "attempts",
+    "solved": "solved",
+    "submitSolution": "Submit Solution",
+    "startChallenge": "Start",
+    "revealHint": "Reveal Hint {{n}} (-{{xp}} XP penalty)",
+    "solveTime": "Solve Time",
+    "rank": "Rank",
+    "builder": "Builder",
+    "reward": "Reward"
   }
 }
